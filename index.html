@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Тимур | Графический дизайн</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg: #090a0f;
+      --card-bg: rgba(18, 20, 29, 0.7);
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.4);
+      --accent-gradient: linear-gradient(135deg, #6366f1, #a855f7);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(168, 85, 247, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    /* Анимированные фоновые сферы */
+    .glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(150px);
+      z-index: -1;
+      opacity: 0.25;
+      pointer-events: none;
+      animation: floatGlow 18s ease-in-out infinite alternate;
+    }
+
+    .glow-1 {
+      top: -120px;
+      left: -100px;
+      background: #6366f1;
+    }
+
+    .glow-2 {
+      bottom: -100px;
+      right: -80px;
+      background: #ec4899;
+      animation-delay: -6s;
+    }
+
+    .glow-3 {
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 400px;
+      background: #3b82f6;
+      opacity: 0.15;
+      animation-delay: -12s;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.15) translate(40px, -30px); }
+      100% { transform: scale(0.9) translate(-30px, 40px); }
+    }
+
+    /* Сетка на фоне */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+      background-size: 32px 32px;
+      z-index: -1;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse 60% 60% at 50% 30%, #000 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 30%, #000 30%, transparent 80%);
+    }
+
+    /* Шапка / Hero */
+    header {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 90px 24px 50px;
+      text-align: center;
+      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: #34d399;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(8px);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(180deg, #ffffff 60%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .accent-gradient-text {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.subtitle {
+      max-width: 620px;
+      margin: 0 auto 34px;
+      color: var(--muted);
+      font-size: 1.12rem;
+      font-weight: 400;
+    }
+
+    /* Теги навыков */
+    .skills-pills {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 35px;
+    }
+
+    .pill {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      padding: 5px 13px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+
+    .pill:hover {
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    /* Кнопки */
+    .social-links {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 13px 26px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+
+    .btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .btn-primary {
+      background: var(--accent-gradient);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.55);
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+
+    /* Фильтры категорий */
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--muted);
+      padding: 7px 18px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .filter-btn:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .filter-btn.active {
+      background: rgba(99, 102, 241, 0.15);
+      color: #818cf8;
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    /* Секция галереи */
+    main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 10px 24px 100px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 28px;
+    }
+
+    /* Карточка с эффектом наклона и радиального блика */
+    .card {
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      backdrop-filter: blur(14px);
+      cursor: pointer;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
+      will-change: transform;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 30px -5px var(--accent-glow);
+    }
+
+    .card.hidden {
+      display: none;
+    }
+
+    .card-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 235px;
+      background: #151822;
+      overflow: hidden;
+    }
+
+    .card-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card:hover .card-img-wrapper img {
+      transform: scale(1.07);
+    }
+
+    .card-overlay-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover .card-overlay-badge {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .card-content {
+      padding: 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .card-tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      color: #818cf8;
+      background: rgba(99, 102, 241, 0.12);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #f1f5f9;
+      transition: color 0.2s;
+    }
+
+    .card:hover .card-title {
+      color: #fff;
+    }
+
+    .card-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* Модальное окно */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 5, 8, 0.88);
+      backdrop-filter: blur(16px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content-container {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: scale(0.95);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal.active .modal-content-container {
+      transform: scale(1);
+    }
+
+    .modal-content {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 14px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+      object-fit: contain;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .modal-caption {
+      margin-top: 14px;
+      color: #e2e8f0;
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border);
+      color: #fff;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: rotate(90deg);
+    }
+
+    /* Футер */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 50px 24px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      background: rgba(9, 10, 15, 0.6);
+      backdrop-filter: blur(10px);
+    }
+
+    footer a {
+      color: #818cf8;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: #a855f7;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+      header {
+        padding-top: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="glow glow-3"></div>
+  <div class="bg-grid"></div>
+
+  <header>
+    <div class="status-badge">
+      <div class="status-dot"></div>
+      Жду твой заказ <3
+    </div>
+    
+    <h1>Тимур <span class="accent-gradient-text">Design</span></h1>
+    <p class="subtitle">Создание сочных превью, комплексного оформления Twitch/YouTube. Аватарки, шапки, баннеры и т.дp>
+
+    <div class="skills-pills">
+      <span class="pill">ПревьюC</span>
+      <span class="pill">Шапка</span>
+      <span class="pill">Аватарка</span>
+      <span class="pill">Баннер</span>
+      <span class="pill">Оформление</span>
+    </div>
+
+    <div class="social-links">
+      <a href="https://t.me/sunbuyo" target="_blank" class="btn btn-primary">
+        <i data-lucide="send"></i>
+        Написать мне
+      <a href="https://funpay.com/users/10235265/" target="_blank" class="btn btn-outline">
+        <i data-lucide="shopping-bag"></i>
+        Профиль FunPay
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Кнопки фильтрации -->
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterGallery('all')">Все работы</button>
+      <button class="filter-btn" onclick="filterGallery('preview')">Превью</button>
+      <button class="filter-btn" onclick="filterGallery('twitch')">Twitch / Баннеры</button>
+      <button class="filter-btn" onclick="filterGallery('art')">Digital Art</button>
+      <button class="filter-btn" onclick="filterGallery('branding')">Брендинг</button>
+    </div>
+
+    <div class="gallery">
+      
+      <!-- Карточка 1: Превью -->
+      <div class="card" data-category="preview" onclick="openModal('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600&auto=format&fit=crop&q=80', 'Игровое YouTube Превью')">
+        <div class="card-img-wrapper">
+          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80" alt="YouTube Превью">
+          <div class="card-overlay-badge"><i data-lucide="maximize-2" style="width:16px;height:16px;"></i></div>
+        </div>
+        <div class="card-content">
+          <div class="card-header-row">
+            <span class="card-tag">YouTube</span>
+          </div>
+          <div class="card-title">Игровое превью / Thumbnail</div>
+          <div class="card-desc">Глубокая цветокоррекция в Camera Raw, отрисовка акцентного контурного света и объемных теней.</div>
+        </div>
+      </div>
+
+      <!-- Карточка 2: Twitch -->
+      <div class="card" data-category="twitch" onclick="openModal('https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=1600&auto=format&fit=crop&q=80', 'Комплект панелей Twitch')">
+        <div class="card-img-wrapper">
+          <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800&auto=format&fit=crop&q=80" alt="Twitch Оформление">
+          <div class="card-overlay-badge"><i data-lucide="maximize-2" style="width:16px;height:16px;"></i></div>
+        </div>
+        <div class="card-content">
+          <div class="card-header-row">
+            <span class="card-tag">Twitch</span>
+          </div>
+          <div class="card-title">Панели & Баннер для стрима</div>
+          <div class="card-desc">Викторианский / темный готический стиль, выверенная типографика и текстурные гранж-элементы.</div>
+        </div>
+      </div>
+
+      <!-- Карточка 3: Digital Art -->
+      <div class="card" data-category="art" onclick="openModal('https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=1600&auto=format&fit=crop&q=80', 'Рендер & Фотоманипуляция')">
+        <div class="card-img-wrapper">
+          <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=800&auto=format&fit=crop&q=80" alt="Digital Art">
+          <div class="card-overlay-badge"><i data-lucide="maximize-2" style="width:16px;height:16px;"></i></div>
+        </div>
+        <div class="card-content">
+          <div class="card-header-row">
+            <span class="card-tag">Art</span>
+          </div>
+          <div class="card-title">Рендер & Фотоманипуляция</div>
+          <div class="card-desc">Сложный многослойный композитинг персонажей, интеграция эффектов дыма, огня и атмосферной пыли.</div>
+        </div>
+      </div>
+
+      <!-- Карточка 4: Брендинг соцсетей -->
+      <div class="card" data-category="branding" onclick="openModal('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=1600&auto=format&fit=crop&q=80', 'Оформление VK / Telegram')">
+        <div class="card-img-wrapper">
+          <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=800&auto=format&fit=crop&q=80" alt="Брендинг соцсетей">
+          <div class="card-overlay-badge"><i data-lucide="maximize-2" style="width:16px;height:16px;"></i></div>
+        </div>
+        <div class="card-content">
+          <div class="card-header-row">
+            <span class="card-tag">Socials</span>
+          </div>
+          <div class="card-title">Оформление сообщества VK / TG</div>
+          <div class="card-desc">Полный пак оформления: аватар, адаптированная шапка для ПК и мобайла, шаблоны для постов.</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Модальное окно просмотра -->
+  <div class="modal" id="modal" onclick="closeModal()">
+    <div class="modal-content-container" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">
+        <i data-lucide="x" style="width:20px;height:20px;"></i>
+      </button>
+      <img src="" alt="Full view" class="modal-content" id="modal-img">
+      <div class="modal-caption" id="modal-caption"></div>
+    </div>
+  </div>
+
+  <footer>
+    Связь по заказам: <a href="https://t.me/sunbuyo" target="_blank">@sunbuyo</a> &bull; Отзывы и гарантия на <a href="https://funpay.com/users/10235265/" target="_blank">FunPay</a>
+  </footer>
+
+  <script>
+    // Инициализация иконок Lucide
+    lucide.createIcons();
+
+    // Модальное окно
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalCaption = document.getElementById('modal-caption');
+
+    function openModal(src, title = '') {
+      modalImg.src = src;
+      modalCaption.textContent = title;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Фильтрация проектов
+    function filterGallery(category) {
+      const cards = document.querySelectorAll('.card');
+      const buttons = document.querySelectorAll('.filter-btn');
+
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    // Интерактивный 3D-Tilt эффект при движении курсора
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -7;
+        const rotateY = ((x - centerX) / centerX) * 7;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      });
+    });
+  </script>
+</body>
+</html>
